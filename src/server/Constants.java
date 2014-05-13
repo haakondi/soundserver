@@ -6,6 +6,6 @@ public class Constants {
 	public static final String songList = "song_list";
 	public static final String songID = "song_id";
 	public static final String commandContainer = "command_container";
-	
+	public static final String volume = "volume";
 
 }

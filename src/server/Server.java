@@ -79,6 +79,9 @@ public class Server implements Runnable {
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
+			}catch(Exception e){
+				System.out.println("Server exception. Should not have bubbled this high!!");
+				e.printStackTrace();
 			}
 		}
 	}
@@ -106,11 +109,10 @@ public class Server implements Runnable {
 			outgoing.put(Constants.songName,
 					player.getSongs().get(player.getSongPlaying()));
 		}
-		// case SET_VOLUME:
-		// player.setVolume((Double) msg.message.getProperty(Property.VOLUME));
-		// outgoing = new OutgoingMessage(true);
-		// outgoing.setProperty(OutProperties.VOLUME, player.getVolume());
-		// break;
+		if (command.equalsIgnoreCase("set_volume")) {
+			 player.setVolume(jsonCommand.getDouble(Constants.volume));
+			 outgoing.put(Constants.volume, player.getVolume());
+		}
 		if (command.equalsIgnoreCase("list_songs")) {
 			JSONObject songs = new JSONObject();
 			List<String> songList = player.getSongs();
