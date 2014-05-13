@@ -56,33 +56,42 @@ public class Server implements Runnable {
 	public void run() {
 		while (true) {
 			try {
+				Response response = null;
 				HttpExchange msg = incoming.take();
-				System.out.println("took: " + msg);
-				System.out.println(msg.getRequestURI().getRawQuery());
+				if(msg.getRequestMethod().equalsIgnoreCase("POST")){
+					JSONObject requestJSON = new JSONObject(IOUtils.toString(msg.getRequestBody()));
+					System.out.println(requestJSON);					
+					response = processMessage(requestJSON.getJSONObject(Constants.commandContainer));
+				}
+				else{
+					response = respondFile(msg.getRequestURI().toString());
+					
+				}
 
 				// JSONObject response =
-				// processMessage(msg.getRequestURI().getRawQuery());
 
-				System.out.println(msg.getRequestURI());
 
-				Response response = respondFile(msg.getRequestURI().toString());
 
 				respond(msg, response);
 			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
 	}
 
-	public JSONObject processMessage(String command) {
+	public Response processMessage(JSONObject jsonCommand) {
+		String command = jsonCommand.getString("command");
 		JSONObject outgoing = new JSONObject();
 		// String command = ((String) msg.get("command"));
 		if (command == null)
-			return outgoing;
+			return new Response(null, null, 500);
 
 		if (command.equalsIgnoreCase("PLAY_NEW")) {
-			player.playNewSong(0);
+			player.playNewSong(jsonCommand.getInt(Constants.songID));
 			outgoing.put(Constants.songIDPlaying, player.getSongPlaying());
 			outgoing.put(Constants.songName,
 					player.getSongs().get(player.getSongPlaying()));
@@ -111,7 +120,7 @@ public class Server implements Runnable {
 			outgoing.put(Constants.songList, songs);
 		}
 
-		return outgoing;
+		return new Response(outgoing.toString().getBytes(), "content-type:application/json", 200);
 	}
 
 	public void respond(HttpExchange exchange, Response response) {

@@ -1,6 +1,5 @@
 package server;
 
-import java.net.Socket;
 import java.util.concurrent.BlockingQueue;
 
 import com.sun.net.httpserver.HttpExchange;
@@ -16,7 +15,8 @@ public class Receiver implements HttpHandler{
 
 	@Override
 	public void handle(HttpExchange exchange) {
-		System.out.println("HEYO");
+		System.out.println();
+		System.out.println(exchange.getRequestMethod());
 		incoming.offer(exchange);
 		
 	}
