@@ -18,6 +18,7 @@ public class Player {
 	private String songDirectory;
 	private int songPlaying;
 	private Queuer queuer;
+	private double volume = 1;
 
 	public Player(String songDirectory) {
 		System.out.println("Starting player");
@@ -64,6 +65,7 @@ public class Player {
 		if (active == null) {
 			return;
 		}
+		this.volume = volume;
 		active.setVolume(volume);
 		System.out.println((volume * 100));
 	}
@@ -106,6 +108,7 @@ public class Player {
 		String bip = file.toURI().toASCIIString();
 		Media hit = new Media(bip);
 		active = new MediaPlayer(hit);
+		active.setVolume(volume);
 		active.setOnEndOfMedia(queuer);
 		active.play();
 		songPlaying = id;

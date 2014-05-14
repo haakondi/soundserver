@@ -45,7 +45,13 @@ public class Song {
 	}
 	
 	public String getTrackName(){
-		return readTag(FieldKey.TITLE);
+		String name = readTag(FieldKey.TITLE);
+		if(name.equals("")){
+			String splitter = System.getProperty("file.separator").equals("\\") ? "\\\\" : System.getProperty("file.separator");
+			String[] temp = uri.split(splitter);
+			name = temp[temp.length - 1].replaceAll(".mp3", "");
+		}
+		return name;
 	}
 	
 	public JSONObject toJSON(){
