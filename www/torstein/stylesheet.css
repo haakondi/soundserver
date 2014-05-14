@@ -10,7 +10,8 @@
 	background-color:#ff0000;
 	width:100%; height:80%;
 	position: relative;
-	overflow: scroll;
+	overflow: auto;
+	overflow-y: auto;
 }
 
 #playing_song{
