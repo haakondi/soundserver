@@ -13,11 +13,24 @@ var listSongs = function( data ) {
   });
 }
 
+function fixer( data ) {
+
+}
+
 function playSong(id) {
   $.post( "/",'{command_container : {command : "play_new" , song_id : '+ id +'}}');
 }
 
 $(document).ready(function() {
     $.post( "/",'{command_container : {command : "list_songs"}}', listSongs);
+    $('#play_button').click(function() {
+      $.post( "/index.html",'{command_container : {command : "resume"}}', fixer);
+   }); 
+   $('#pause_button').click(function() {
+      $.post( "/index.html",'{command_container : {command : "pause"}}', fixer);
+   }); 
+   $('#stop_button').click(function() {
+      $.post( "/index.html",'{command_container : {command : "stop"}}', fixer);
+   }); 
 });
 
