@@ -12,4 +12,5 @@ public class Constants {
 	public static final String album = "album";
 	public static final String status = "status";
 	public static final String queue = "queue";
+	public static final String time = "time";
 }

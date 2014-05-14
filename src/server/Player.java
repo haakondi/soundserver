@@ -122,6 +122,20 @@ public class Player {
 	public void queue(int songID){
 		queue.add(songID);
 	}
+	
+	public void stop(){
+		queue.clear();
+		if(active != null){
+			active.stop();			
+		}
+		
+	}
+	
+	public int getTimeInSeconds(){
+		if(active == null)
+			return -1;
+		return (int) active.getCurrentTime().toSeconds();
+	}
 
 	public static void main(String[] args) {
 		Player p = new Player("C:\\users\\user\\Music\\");

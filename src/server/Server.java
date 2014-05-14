@@ -95,29 +95,18 @@ public class Server implements Runnable {
 
 		if (command.equalsIgnoreCase("PLAY_NEW")) {
 			player.playNewSong(jsonCommand.getInt(Constants.songID));
-			outgoing.put(Constants.songIDPlaying, player.getSongPlaying());
-			outgoing.put(Constants.songName,
-					player.getSongs().get(player.getSongPlaying()));
 		}
 		if (command.equalsIgnoreCase("queue")) {
 			player.queue(jsonCommand.getInt(Constants.songID));
-			outgoing.put(Constants.songIDPlaying, player.getSongPlaying());
-			outgoing.put(Constants.songName,
-					player.getSongs().get(player.getSongPlaying()));
 		}
 		if (command.equalsIgnoreCase("pause")) {
 			player.pause();
-			outgoing.put(Constants.songIDPlaying, -1);
 		}
 		if (command.equalsIgnoreCase("resume")) {
 			player.resume();
-			outgoing.put(Constants.songIDPlaying, player.getSongPlaying());
-			outgoing.put(Constants.songName,
-					player.getSongs().get(player.getSongPlaying()));
 		}
 		if (command.equalsIgnoreCase("set_volume")) {
 			 player.setVolume(jsonCommand.getDouble(Constants.volume));
-			 outgoing.put(Constants.volume, player.getVolume());
 		}
 		if (command.equalsIgnoreCase("list_songs")) {
 			JSONObject songs = new JSONObject();
@@ -128,9 +117,21 @@ public class Server implements Runnable {
 			}
 			outgoing.put(Constants.songList, songs);
 		}
+		if (command.equalsIgnoreCase("stop")) {
+			player.stop();
+		}
 		
-
+		outgoing.put(Constants.status, generateStatus());
 		return new Response(outgoing.toString().getBytes(), "content-type:application/json", 200);
+	}
+	
+	public JSONObject generateStatus(){
+		JSONObject status = new JSONObject();
+		status.put(Constants.songIDPlaying, player.getSongPlaying());
+		status.put(Constants.volume, player.getVolume());
+		status.put(Constants.time, player.getTimeInSeconds());
+		return status;
+		
 	}
 
 	public void respond(HttpExchange exchange, Response response) {
