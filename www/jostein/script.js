@@ -22,6 +22,7 @@ function playSong(id) {
 }
 
 $(document).ready(function() {
+    
     $.post( "/",'{command_container : {command : "list_songs"}}', listSongs);
     $('#play_button').click(function() {
       $.post( "/index.html",'{command_container : {command : "resume"}}', fixer);
