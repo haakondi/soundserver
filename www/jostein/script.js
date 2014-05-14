@@ -1,8 +1,10 @@
 
 var listSongs = function( data ) {
-	var songs = $.parseJSON(data);
-	console.log(songs);
-	$('#songTable').append('<tr><td>my data</td><td>more data</td></tr>');
+	var songs = ($.parseJSON(data)).song_list;
+	for (var i = 0; i < songs.length; i++) {
+		var song = songs[i];
+		$('#songTable').append('<tr><td>'+song.track_name+'</td><td>'+song.artist+'</td><td>'+song.album+'</td></tr>');
+	};
 }
 
 $(document).ready(function() {
