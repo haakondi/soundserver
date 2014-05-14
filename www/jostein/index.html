@@ -5,7 +5,6 @@
 
 	<link rel="stylesheet" href="bootstrap-3.1.1-dist/css/bootstrap.css">
 
-
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 	<script type="text/javascript" src="script.js"></script>
 	<link rel="stylesheet" type="text/css" href="main.css">
@@ -35,17 +34,22 @@
 				</div>
 			</div>
 		</div>
-		<div class="btn-group-wrap span12">
-			<div class="btn-group btn-group-lg">
-				<button type="button" class="btn btn-default btn-lg">
-					<span class="glyphicon glyphicon-stop"></span> Stop
-				</button>
-				<button type="button" class="btn btn-default btn-lg">
-					<span class="glyphicon glyphicon-pause"></span> Pause
-				</button>
-				<button type="button" class="btn btn-default btn-lg" id="play_button">
-					<span class="glyphicon glyphicon-play"></span> Play
-				</button>
+		<div class="row">
+			<div class="col-md-4">
+					<div class="btn-group btn-group-lg options-element">
+						<button type="button" class="btn btn-default btn-lg" id="stop_button">
+							<span class="glyphicon glyphicon-stop"></span> Stop
+						</button>
+						<button type="button" class="btn btn-default btn-lg" id="pause_button">
+							<span class="glyphicon glyphicon-pause"></span> Pause
+						</button>
+						<button type="button" class="btn btn-default btn-lg" id="play_button">
+							<span class="glyphicon glyphicon-play"></span> Resume
+						</button>
+					</div>
+			</div>
+			<div class="col-md-4">
+				<input type="range" name="points" min="0" max="1" step="0.01" class="options-element" id="volume-slider">
 			</div>
 		</div>
 	</div>

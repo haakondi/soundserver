@@ -9,13 +9,12 @@
 	overflow-y: auto;
 }
 
-.btn-group-wrap {
-    text-align: center;
+.options-element {
+    margin: 0 auto;
+    width: auto;
+    display: inline-block !important;
 }
 
-div.btn-group {
-    margin: 0 auto; 
-    text-align: center;
-    width: inherit;
-    display: inline-block;
+#volume-slider {
 }
+

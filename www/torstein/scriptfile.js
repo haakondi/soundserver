@@ -12,4 +12,9 @@ $(document).ready(function() {
    $('#resume_button').click(function() {
       $.post( "/index.html",'{command_container : {command : "resume"}}', fixer);
    }); 
+   $('#volume_slider').on('change',function() {
+      var volume = parseFloat($('#volume_slider').val(), 10.00);
+      console.log(volume)
+      $.post( "/index.html",'{command_container : {command : "set_volume", volume : ' + volume + '}}', fixer);
+   }); 
 });
