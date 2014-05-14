@@ -67,11 +67,6 @@ public class Server implements Runnable {
 					response = respondFile(msg.getRequestURI().toString());
 					
 				}
-
-				// JSONObject response =
-
-
-
 				respond(msg, response);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block

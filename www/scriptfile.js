@@ -21,6 +21,6 @@ $(document).ready(function() {
       console.log(volume)
       $.post( "/index.html",'{command_container : {command : "set_volume", volume : ' + volume + '}}', fixer);
    });
-   window.setInterval(update, 100);
+   //window.setInterval(update, 3000);
 
 });
