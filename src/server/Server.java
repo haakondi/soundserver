@@ -99,6 +99,12 @@ public class Server implements Runnable {
 			outgoing.put(Constants.songName,
 					player.getSongs().get(player.getSongPlaying()));
 		}
+		if (command.equalsIgnoreCase("queue")) {
+			player.queue(jsonCommand.getInt(Constants.songID));
+			outgoing.put(Constants.songIDPlaying, player.getSongPlaying());
+			outgoing.put(Constants.songName,
+					player.getSongs().get(player.getSongPlaying()));
+		}
 		if (command.equalsIgnoreCase("pause")) {
 			player.pause();
 			outgoing.put(Constants.songIDPlaying, -1);
@@ -115,12 +121,14 @@ public class Server implements Runnable {
 		}
 		if (command.equalsIgnoreCase("list_songs")) {
 			JSONObject songs = new JSONObject();
-			List<String> songList = player.getSongs();
+			List<Song> songList = player.getSongs();
+			songs.put("length", songList.size());
 			for (int i = 0; i < songList.size(); i++) {
-				songs.put(Integer.toString(i), songList.get(i));
+				songs.put(Integer.toString(i), songList.get(i).toJSON());
 			}
 			outgoing.put(Constants.songList, songs);
 		}
+		
 
 		return new Response(outgoing.toString().getBytes(), "content-type:application/json", 200);
 	}
