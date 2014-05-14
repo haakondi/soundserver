@@ -122,6 +122,7 @@ public class Server implements Runnable {
 		if (command.equalsIgnoreCase("list_songs")) {
 			JSONObject songs = new JSONObject();
 			List<Song> songList = player.getSongs();
+			songs.put("length", songList.size());
 			for (int i = 0; i < songList.size(); i++) {
 				songs.put(Integer.toString(i), songList.get(i).toJSON());
 			}
