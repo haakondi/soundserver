@@ -12,7 +12,7 @@ $(document).ready(function() {
       $( ".result" ).html( data );
   };
    $('#play_button').click(function() {
-      $.post( "http://192.168.2.189:3000/",'{command_container : {command : "list_songs"}}', listSongs);
+      $.post( "/",'{command_container : {command : "list_songs"}}', listSongs);
    }); 
 });
 
