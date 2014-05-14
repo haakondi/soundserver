@@ -1,0 +1,10 @@
+
+.songElement:hover {
+	background-color: #809FFF;
+}
+
+.tableContainer {
+	height:80%;
+	overflow: auto;
+	overflow-y: auto;
+}
