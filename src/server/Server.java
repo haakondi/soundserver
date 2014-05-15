@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.concurrent.BlockingQueue;
 
 import org.apache.commons.io.IOUtils;
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import com.sun.net.httpserver.HttpExchange;
@@ -93,7 +94,11 @@ public class Server implements Runnable {
 			player.playNewSong(jsonCommand.getInt(Constants.songID));
 		}
 		if (command.equalsIgnoreCase("queue")) {
-			player.queue(jsonCommand.getInt(Constants.songID));
+			player.clearQueue();
+			JSONArray queue = jsonCommand.getJSONArray(Constants.queueArray);
+			for(int i = 0; i < queue.length(); i++){
+				player.queue(queue.getInt(i));
+			}
 		}
 		if (command.equalsIgnoreCase("pause")) {
 			player.pause();
@@ -143,6 +148,7 @@ public class Server implements Runnable {
 		status.put(Constants.volume, player.getVolume());
 		status.put(Constants.time, player.getTimeInSeconds());
 		status.put(Constants.isPlaying, player.isPlaying());
+		status.put(Constants.queueArray, (new JSONArray(player.getQueue())));
 		return status;
 
 	}

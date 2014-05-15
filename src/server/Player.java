@@ -112,8 +112,10 @@ public class Player {
 	public void playNextSong() {
 		if(songPlaying != -1)
 			history.addFirst(songPlaying);
-		if(queue.size() == 0)
+		if(queue.size() == 0){
+			stop();
 			return;
+		}
 		int id = queue.poll();
 		play(id);
 	}
@@ -182,6 +184,10 @@ public class Player {
 		
 	}
 	
+	public void clearQueue(){
+		queue.clear();
+	}
+	
 	public int getTimeInSeconds(){
 		if(active == null)
 			return -1;
@@ -192,6 +198,10 @@ public class Player {
 		if(active == null || songPlaying == -1)
 			return;
 		active.seek(new Duration(time*1000*songs.get(songPlaying).getTrackLength()));
+	}
+	
+	public LinkedList<Integer> getQueue(){
+		return queue;
 	}
 	
 	public boolean isPlaying(){
