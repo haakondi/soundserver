@@ -17,6 +17,9 @@ var listSongs = function( data ) {
       playing = true;
   });
 }
+function update(){
+  $.post( "/index.html",'{command_container : {command : "status"}}', fixer);
+}
 
 Object.toArray = function(obj, sortOn) {
     var array = [], key;
@@ -40,7 +43,6 @@ function sortSongs(sortOn) {
   checkAscending(sortOn);
   var array = Object.toArray(dataStatus, sortOn);
   array.sort(function(a, b){
-    console.log(a);
     var nameA=a[1].toLowerCase(), nameB=b[1].toLowerCase()
     if (nameA < nameB) //sort string ascending
       return -1 * invertedSort; 
@@ -52,10 +54,19 @@ function sortSongs(sortOn) {
   for (var i = 0; i < array.length; i++) {
     var key = array[i][0];
     var song = dataStatus[key];
-    console.log(song);
     $('#songTable').append('<tr class="songElement tableElement" id="'+key+'"><td>'+song.track_name+'</td><td>'+song.artist+'</td><td>'+song.album+'</td></tr>');
 
   };
+}
+function computeTime(seconds) {
+  var minutes = Math.floor(seconds/60)
+  var seconds = seconds%60;
+  if(seconds < 10) {
+    var lastpartofstring = '0' + seconds;
+  } else {
+    lastpartofstring = ''+seconds;
+  }
+  return '' + minutes + ':' + lastpartofstring;
 }
 
 function updateProgress(status , currentSong) {
@@ -64,20 +75,20 @@ function updateProgress(status , currentSong) {
   $('#progressbar-slider').val(status.time/currentSong.length);
 
   $('#progress-made-container span').remove('#progress-made');
-  $('#progress-made-container').append('<span class="progress-label" id="progress-made"> ' + status.time + '</span>');
+  $('#progress-made-container').append('<span class="progress-label" id="progress-made"> ' + computeTime(status.time) + '</span>');
 
   $('#progress-left-container span').remove('#progress-left');
-  $('#progress-left-container').append('<span class="progress-label" id="progress-left"> -' + (currentSong.length - status.time) + '</span>');
+  $('#progress-left-container').append('<span class="progress-label" id="progress-left"> -' + computeTime(currentSong.length - status.time) + '</span>');
 }
 
 function fixer( data ) {
-  console.log(dataStatus);
   var status = $.parseJSON(data);
   status = status.status;
-  var currentSong = dataStatus[status.song_id_playing];
   $('.current-display').remove('.current-displaytext');
-  $('.current-display').html('<span class="current-displaytext">'+ currentSong.artist + ' - '+ currentSong.track_name +'</span>');
-
+  if(status.song_id_playing !== -1) {
+    var currentSong = dataStatus[status.song_id_playing];
+    $('.current-display').html('<span class="current-displaytext">'+ currentSong.artist + ' - '+ currentSong.track_name +'</span>');
+  }
   $('#volume-slider').val(status.volume);
 
   updateProgress(status,currentSong);
@@ -103,6 +114,8 @@ $(document).ready(function() {
 
     $('#pause_button').hide();
 
+    window.setInterval(update, 1000);
+
     $('#play_button').click(function() {
       $.post( "/index.html",'{command_container : {command : "resume"}}', fixer);
    });
@@ -118,6 +131,10 @@ $(document).ready(function() {
    $('#volume-slider').on('change',function() {
       var volume = parseFloat($('#volume-slider').val(), 10.00);
       $.post( "/index.html",'{command_container : {command : "set_volume", volume : ' + volume + '}}', fixer);
+   });
+   $('#progressbar-slider').on('change',function() {
+      var time_float = parseFloat($('#progressbar-slider').val(), 10.00);
+      $.post( "/index.html",'{command_container : {command : "seek", time_float : ' + time_float + '}}', fixer);
    });
    $('#songHeader').click(function() {
     sortSongs('track_name');
