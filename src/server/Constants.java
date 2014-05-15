@@ -14,6 +14,7 @@ public class Constants {
 	public static final String status = "status";
 	public static final String queue = "queue";
 	public static final String time = "time";
+	public static final String time_float = "time_float";
 	public static final String seek = "seek";
 	public static final String next = "next";
 	public static final String prev = "prev";

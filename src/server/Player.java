@@ -21,6 +21,7 @@ public class Player {
 	private int songPlaying = -1;
 	private Queuer queuer;
 	private double volume = 1;
+	private volatile boolean playing;
 
 	public Player(String songDirectory) {
 		System.out.println("Starting player");
@@ -45,6 +46,7 @@ public class Player {
 				if(queue.size() > 0){
 					playNextSong();
 				}
+				playing = false;
 			}
 			
 		}
@@ -118,6 +120,7 @@ public class Player {
 		System.out.println(history);
 		if (active != null) {
 			active.stop();
+			active.dispose();
 		}
 		File file = new File(songs.get(id).uri);
 		String bip = file.toURI().toASCIIString();
@@ -126,6 +129,7 @@ public class Player {
 		active.setVolume(volume);
 		active.setOnEndOfMedia(queuer);
 		active.play();
+		playing = true;
 		songPlaying = id;
 		System.out.println("playing: " + songs.get(id));
 	}
@@ -145,8 +149,10 @@ public class Player {
 		queue.clear();
 		history.clear();
 		if(active != null){
-			active.stop();			
+			active.stop();
+			active.dispose();
 		}
+		playing = false;
 		
 	}
 	
@@ -180,14 +186,14 @@ public class Player {
 		return (int) active.getCurrentTime().toSeconds();
 	}
 	
-	public void seek(int time){
-		if(active == null)
+	public void seek(float time){
+		if(active == null || songPlaying == -1)
 			return;
-		active.seek(new Duration(time*1000));
+		active.seek(new Duration(time*1000*songs.get(songPlaying).getTrackLength()));
 	}
 	
 	public boolean isPlaying(){
-		return active != null && active.statusProperty().get() == Status.PLAYING;
+		return playing;
 	}
 
 
