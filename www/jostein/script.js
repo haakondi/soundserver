@@ -57,6 +57,17 @@ function sortSongs(sortOn) {
   };
 }
 
+function updateProgress(status , currentSong) {
+    $( "#progressbar-slider" ).slider( "option", "max", currentSong.length );
+  $('#progressbar-slider').val(status.time);
+
+  $('#progress-made-container span').remove('#progress-made');
+  $('#progress-made-container').append('<span class="progress-label" id="progress-made"> ' + status.time + '</span>');
+
+  $('#progress-left-container span').remove('#progress-left');
+  $('#progress-left-container').append('<span class="progress-label" id="progress-left"> -' + (currentSong.length - status.time) + '</span>');
+}
+
 function fixer( data ) {
   console.log(dataStatus);
   var status = $.parseJSON(data);
@@ -64,12 +75,18 @@ function fixer( data ) {
   var currentSong = dataStatus[status.song_id_playing];
   $('.current-display').remove('.current-displaytext');
   $('.current-display').html('<span class="current-displaytext">'+ currentSong.artist + ' - '+ currentSong.track_name +'</span>');
+
+  $('#volume-slider').val(status.volume);
+
+  updateProgress(status,currentSong);
+
+  //$('#volume-slider').slider('refresh');
   if(status.is_playing) {
-      $('#pause_button').hide();
-      $('#play_button').show();
-  } else {
       $('#pause_button').show();
       $('#play_button').hide();
+  } else {
+      $('#pause_button').hide();
+      $('#play_button').show();
   }
 }
 
@@ -80,6 +97,8 @@ function playSong(id) {
 $(document).ready(function() {
     
     $.post( "/",'{command_container : {command : "list_songs"}}', listSongs);
+    $.post( "/",'{command_container : {command : "status"}}', fixer);
+
     $('#pause_button').hide();
 
     $('#play_button').click(function() {
