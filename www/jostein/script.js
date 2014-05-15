@@ -60,6 +60,11 @@ function sortSongs(sortOn) {
     $('#songTable').append('<tr class="songElement tableElement" id="'+key+'"><td>'+song.track_name+'</td><td>'+song.artist+'</td><td>'+song.album+'</td></tr>');
 
   };
+  $('.songElement').click(function() {
+      var songID = $(this).attr('id');
+      playSong(songID);
+      playing = true;
+  });
 }
 function computeTime(seconds) {
   var minutes = Math.floor(seconds/60)
