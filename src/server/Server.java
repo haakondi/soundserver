@@ -142,6 +142,7 @@ public class Server implements Runnable {
 		status.put(Constants.volume, player.getVolume());
 		status.put(Constants.time, player.getTimeInSeconds());
 		status.put(Constants.isPlaying, player.isPlaying());
+		System.out.println(status);
 		return status;
 
 	}
