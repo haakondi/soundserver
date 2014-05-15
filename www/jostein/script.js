@@ -28,6 +28,7 @@ Object.toArray = function(obj, sortOn) {
     return array;
 };
 
+
 function checkAscending(sortOn) {
   if(sortOn === currentSortOn) {
     if(invertedSort === -1) {
@@ -38,6 +39,16 @@ function checkAscending(sortOn) {
   } else {
     invertedSort = 1;
   }
+}
+
+function compareArrays(a, b){
+  if(a.length !== b.length)
+    return false;
+  for(i in a){
+    if(a[i] != b[i])
+      return false;
+  }
+  return true;
 }
 
 function sortSongs(sortOn) {
@@ -87,6 +98,34 @@ function updateProgress(status , currentSong) {
   $('#progress-left-container').append('<span class="progress-label" id="progress-left"> -' + computeTime(currentSong.length - status.time) + '</span>');
 }
 
+function makeListItem(songid){
+  var track = dataStatus[songid].track_name;
+  var artist = dataStatus[songid].artist;
+  var album = dataStatus[songid].album;
+  var result = '<li class="drag-drop list-group-item" songid="'+songid+'">';
+  result += '<div class="queue-element songTableElement">'+track+'</div>';
+  result += '<div class="queue-element artistTableElement">'+artist+'</div>';
+  result += '<div class="queue-element albumTableElement">'+album+'</div>';
+  result += '</li>';
+  return result;
+
+}
+
+function redrawQueue(){
+  $('#queue-list li').remove();
+  for(i in queueStatus){
+    $('#queue-list').append(makeListItem(queueStatus[i]));
+  }
+}
+
+function maintainQueue(queue_array) {
+  var newQueue = queue_array;
+  if(!(compareArrays(newQueue, queueStatus))) {
+    queueStatus = newQueue;
+    redrawQueue();
+  }
+}
+
 function fixer( data ) {
   var status = $.parseJSON(data);
   status = status.status;
@@ -98,7 +137,7 @@ function fixer( data ) {
   }
   $('#volume-slider').val(status.volume);
 
-  
+  maintainQueue(status.queue_array);
 
   if(status.is_playing) {
       $('#pause_button').show();
@@ -165,7 +204,7 @@ $(document).ready(function() {
 
                       queueStatus[newIndex] = parseInt(listItem.attr('songid'));
                 });
-                $.post( "/index.html",'{command_container : {command : "queue", queue_array: '+queueStatus+'}}', fixer);
+                $.post( "/index.html",'{command_container : {command : "queue", queue_array: ['+queueStatus+']}}', fixer);
             }
           });
 });
