@@ -41,6 +41,7 @@ function checkAscending(sortOn) {
 
 function sortSongs(sortOn) {
   checkAscending(sortOn);
+  currentSortOn = sortOn;
   var array = Object.toArray(dataStatus, sortOn);
   array.sort(function(a, b){
     var nameA=a[1].toLowerCase(), nameB=b[1].toLowerCase()
