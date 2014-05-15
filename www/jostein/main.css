@@ -1,4 +1,22 @@
 
+.start h1 {
+	text-align: center;
+	vertical-align: top;
+	font-size: 20px;
+	color: gray;
+}
+.start p {
+	text-align: center;
+	vertical-align: center;
+	font-size: 12px;
+	color: gray;
+}
+
+.start {
+	height: 50px;
+	display: block;
+}
+
 .songElement:hover {
 	background-color: #809FFF;
 }
@@ -19,6 +37,7 @@
 	font-size: 24px;
 	font-family: "Georgia";
 	text-align: center;
+	color: gray;
 }
 .clickableHeader:hover {
 	text-decoration: underline;
@@ -27,11 +46,12 @@
 .progress-label {
     font-size: 10px;
     vertical-align: top;
+    color: gray;
 }
 
 .progressbar-container {
 	margin: 0 auto;
-    width: 86%;
+    width: 82%;
     display: inline-block !important;
 }
 
@@ -41,15 +61,19 @@
 
 .songTableElement {
 	position: relative;
-	width:48% !important;
+	width:40% !important;
 }
 .artistTableElement {
 	position: relative;
-	width:24% !important;
+	width:20% !important;
 }
 .albumTableElement {
 	position: relative;
-	width:24% !important;
+	width:20% !important;
+}
+.queueButton {
+	position: relative;
+	width:20% !important;
 }
 #queue-list .drag-drop {
         cursor: move;

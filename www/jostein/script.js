@@ -3,18 +3,39 @@ var queueStatus = [];
 var invertedSort = -1;
 var currentSortOn = 'track_name';
 
+function makeTableItem(songid) {
+  var song = dataStatus[songid];
+  var result = '<tr class="songElement tableElement" id="'+songid+'">';
+  result += '<td class="songTableElement">'+song.track_name+'</td>';
+  result += '<td class="artistTableElement">'+song.artist+'</td>';
+  result += '<td class="albumTableElement">'+song.album+'</td>';
+  result += '<td class="queueButton"><button type="button" class="btn btn-default"><span class="glyphicon glyphicon-plus-sign"></span></button> </td> '
+  result += '</tr>';
+  return result;
+  
+}
+function addTableListeners() {
+  $('.songElement').click(function() {
+      var songID = $(this).attr('id');
+      playSong(songID);
+  });
+  $('.queueButton').click(function(e) {
+    e.stopPropagation();
+    var songID = $(this).parent('.songElement').attr('id');
+    queueStatus[queueStatus.length] = songID;
+    $.post( "/index.html",'{command_container : {command : "queue", queue_array: ['+queueStatus+']}}', fixer);
+    redrawQueue();
+  });
+}
 
 var listSongs = function( data ) {
 	var songs = ($.parseJSON(data)).song_list;
 	for (var i = 0; i < songs.length; i++) {
 		var song = songs[i];
     dataStatus[i] = song;
-		$('#songTable').append('<tr class="songElement tableElement" id="'+i+'"><td class="songTableElement">'+song.track_name+'</td><td class="artistTableElement">'+song.artist+'</td><td class="albumTableElement">'+song.album+'</td></tr>');
+    $('#songTable').append(makeTableItem(i));
 	};
-  $('.songElement').click(function() {
-      var songID = $(this).attr('id');
-      playSong(songID);
-  });
+  addTableListeners();
 }
 function update(){
   $.post( "/index.html",'{command_container : {command : "status"}}', fixer);
@@ -67,13 +88,10 @@ function sortSongs(sortOn) {
   for (var i = 0; i < array.length; i++) {
     var key = array[i][0];
     var song = dataStatus[key];
-    $('#songTable').append('<tr class="songElement tableElement" id="'+key+'"><td class="songTableElement">'+song.track_name+'</td><td class="artistTableElement">'+song.artist+'</td><td class="albumTableElement">'+song.album+'</td></tr>');
+    $('#songTable').append(makeTableItem(key));
 
   };
-  $('.songElement').click(function() {
-      var songID = $(this).attr('id');
-      playSong(songID);
-  });
+  addTableListeners();
 }
 function computeTime(seconds) {
   var minutes = Math.floor(seconds/60)
