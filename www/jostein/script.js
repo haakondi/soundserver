@@ -36,6 +36,8 @@ function checkAscending(sortOn) {
     } else {
       invertedSort = -1;
     }
+  } else {
+    invertedSort = 1;
   }
 }
 
