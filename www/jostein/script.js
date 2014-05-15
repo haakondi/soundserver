@@ -87,8 +87,6 @@ function computeTime(seconds) {
 }
 
 function updateProgress(status , currentSong) {
-  console.log(status.time);
-  console.log(currentSong.length);
   $('#progressbar-slider').val(status.time/currentSong.length);
 
   $('#progress-made-container span').remove('#progress-made');
