@@ -58,14 +58,15 @@ public class Server implements Runnable {
 			try {
 				Response response = null;
 				HttpExchange msg = incoming.take();
-				if(msg.getRequestMethod().equalsIgnoreCase("POST")){
-					JSONObject requestJSON = new JSONObject(IOUtils.toString(msg.getRequestBody()));
-					System.out.println(requestJSON);					
-					response = processMessage(requestJSON.getJSONObject(Constants.commandContainer));
-				}
-				else{
+				if (msg.getRequestMethod().equalsIgnoreCase("POST")) {
+					JSONObject requestJSON = new JSONObject(
+							IOUtils.toString(msg.getRequestBody()));
+					System.out.println(requestJSON);
+					response = processMessage(requestJSON
+							.getJSONObject(Constants.commandContainer));
+				} else {
 					response = respondFile(msg.getRequestURI().toString());
-					
+
 				}
 				respond(msg, response);
 			} catch (InterruptedException e) {
@@ -74,8 +75,9 @@ public class Server implements Runnable {
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-			}catch(Exception e){
-				System.out.println("Server exception. Should not have bubbled this high!!");
+			} catch (Exception e) {
+				System.out
+						.println("Server exception. Should not have bubbled this high!!");
 				e.printStackTrace();
 			}
 		}
@@ -101,7 +103,9 @@ public class Server implements Runnable {
 			player.resume();
 		}
 		if (command.equalsIgnoreCase("set_volume")) {
-			 player.setVolume(jsonCommand.getDouble(Constants.volume));
+			double vol = jsonCommand.getDouble(Constants.volume);
+			if (vol >= 0 && vol <= 1)
+				player.setVolume(jsonCommand.getDouble(Constants.volume));
 		}
 		if (command.equalsIgnoreCase("list_songs")) {
 			JSONObject songs = new JSONObject();
@@ -115,18 +119,31 @@ public class Server implements Runnable {
 		if (command.equalsIgnoreCase("stop")) {
 			player.stop();
 		}
+		if (command.equalsIgnoreCase("seek")) {
+			player.seek(jsonCommand.getInt(Constants.time));
+		}
+		if (command.equalsIgnoreCase("next")) {
+			player.playNextSong();
+		}
+		if (command.equalsIgnoreCase("prev")) {
+			player.prev();
+		}
 		
+		
+
 		outgoing.put(Constants.status, generateStatus());
-		return new Response(outgoing.toString().getBytes(), "content-type:application/json", 200);
+		return new Response(outgoing.toString().getBytes(),
+				"content-type:application/json", 200);
 	}
-	
-	public JSONObject generateStatus(){
+
+	public JSONObject generateStatus() {
 		JSONObject status = new JSONObject();
 		status.put(Constants.songIDPlaying, player.getSongPlaying());
 		status.put(Constants.volume, player.getVolume());
 		status.put(Constants.time, player.getTimeInSeconds());
+		status.put(Constants.isPlaying, player.isPlaying());
 		return status;
-		
+
 	}
 
 	public void respond(HttpExchange exchange, Response response) {

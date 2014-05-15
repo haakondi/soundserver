@@ -9,14 +9,16 @@ import java.util.Queue;
 import javafx.embed.swing.JFXPanel;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+import javafx.scene.media.MediaPlayer.Status;
+import javafx.util.Duration;
 
 public class Player {
-	private Queue<Integer> queue;
+	private LinkedList<Integer> queue;
+	private LinkedList<Integer> history;
 	private final List<Song> songs;
-	private String sep = System.getProperty("file.separator");
 	private MediaPlayer active;
 	private String songDirectory;
-	private int songPlaying;
+	private int songPlaying = -1;
 	private Queuer queuer;
 	private double volume = 1;
 
@@ -25,6 +27,7 @@ public class Player {
 		// new JFXPanel();
 		System.out.println("panel created");
 		queue = new LinkedList<Integer>();
+		history = new LinkedList<Integer>();
 		this.songDirectory = songDirectory;
 		songs = new ArrayList<Song>();
 		listSongs(new File(songDirectory));
@@ -36,8 +39,11 @@ public class Player {
 		@Override
 		public void run() {
 			synchronized (queue) {
+				if(songPlaying != -1){
+					history.addFirst(songPlaying);					
+				}
 				if(queue.size() > 0){
-					playNewSong(queue.poll());
+					playNextSong();
 				}
 			}
 			
@@ -100,10 +106,19 @@ public class Player {
 	}
 
 	public void playNextSong() {
+		if(songPlaying != -1)
+			history.addFirst(songPlaying);
+		if(queue.size() == 0)
+			return;
+		int id = queue.poll();
+		play(id);
+	}
+	
+	private void play(int id){
+		System.out.println(history);
 		if (active != null) {
 			active.stop();
 		}
-		int id = queue.poll();
 		File file = new File(songs.get(id).uri);
 		String bip = file.toURI().toASCIIString();
 		Media hit = new Media(bip);
@@ -128,8 +143,33 @@ public class Player {
 	
 	public void stop(){
 		queue.clear();
+		history.clear();
 		if(active != null){
 			active.stop();			
+		}
+		
+	}
+	
+	private void playPrevious(){
+		if(songPlaying != -1){
+			queue.addFirst(songPlaying);
+		}
+			play(history.poll());
+		
+	}
+	
+	private void restartSong(){
+		active.seek(new Duration(0));
+	}
+	
+	public void prev(){
+		if(active == null){
+			return;
+		}
+		if(history.size() == 0 || active.currentTimeProperty().getValue().toMillis() > 2500){
+			restartSong();
+		}else if(history.size() > 0){
+			playPrevious();
 		}
 		
 	}
@@ -139,12 +179,17 @@ public class Player {
 			return -1;
 		return (int) active.getCurrentTime().toSeconds();
 	}
-
-	public static void main(String[] args) {
-		Player p = new Player("C:\\users\\user\\Music\\");
-		System.out.println(p.getSongs());
-		// p.playNewSong("C:\\users\\user\\Music\\downupus.mp3");
-		System.out.println(p.getSongs().get(0).toJSON());
+	
+	public void seek(int time){
+		if(active == null)
+			return;
+		active.seek(new Duration(time*1000));
 	}
+	
+	public boolean isPlaying(){
+		return active != null && active.statusProperty().get() == Status.PLAYING;
+	}
+
+
 
 }
