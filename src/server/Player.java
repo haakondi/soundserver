@@ -124,7 +124,6 @@ public class Player {
 		System.out.println(history);
 		if (active != null) {
 			active.stop();
-			active.dispose();
 		}
 		File file = new File(songs.get(id).uri);
 		String bip = file.toURI().toASCIIString();
@@ -154,7 +153,6 @@ public class Player {
 		history.clear();
 		if(active != null){
 			active.stop();
-			active.dispose();
 		}
 		playing = false;
 		
