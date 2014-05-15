@@ -6,6 +6,8 @@
 	<link rel="stylesheet" href="bootstrap-3.1.1-dist/css/bootstrap.css">
 
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+	<link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/themes/smoothness/jquery-ui.css" />
+	<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
 	<script type="text/javascript" src="script.js"></script>
 	<link rel="stylesheet" type="text/css" href="main.css">
 
@@ -13,16 +15,16 @@
 <body>
 	<div class="container">
 		<div class="row">   
-			<div class="span12">      
+			<div class="col-md-6">      
 				<div class="panel panel-default">
 					<div class="panel-heading">Songs</div>
 
 					<table class="table" >
 						<thead>
 							<tr>
-								<th id="songHeader" class="clickableHeader tableElement">Song</th>
-								<th id="artistHeader" class="clickableHeader tableElement">Artist</th>
-								<th id="albumHeader" class="clickableHeader tableElement">Album</th>
+								<th id="songHeader" class="clickableHeader songTableElement">Song</th>
+								<th id="artistHeader" class="clickableHeader artistTableElement">Artist</th>
+								<th id="albumHeader" class="clickableHeader albumTableElement">Album</th>
 							</tr>
 						</thead>
 					</table>
@@ -30,6 +32,37 @@
 						<table class="table" id="songTable">
 
 						</table>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-6">
+				<div class="panel panel-default">
+					<div class="panel-heading">Queue</div>
+					<ul class="list-group" >
+						<li class="list-group-item">
+							<div class="queue-element songTableElement qHeader">Song</div>
+							<div class="queue-element artistTableElement qHeader">Artist</div>
+							<div class="queue-element albumTableElement qHeader">Album</div>
+						</li>
+					</ul>
+					<div class="tableContainer">
+					<ul id="queue-list" class="list-group">
+						<li class="drag-drop list-group-item" songid="1">
+							<div class="queue-element songTableElement">songId1</div>
+							<div class="queue-element artistTableElement">Artist</div>
+							<div class="queue-element albumTableElement">Album</div>
+						</li>
+						<li class="drag-drop list-group-item" songid="2">
+							<div class="queue-element songTableElement">songId2</div>
+							<div class="queue-element artistTableElement">Artist1</div>
+							<div class="queue-element albumTableElement">Album1</div>
+						</li>
+						<li class="drag-drop list-group-item" songid="3">
+							<div class="queue-element songTableElement">songId3</div>
+							<div class="queue-element artistTableElement">Artist1</div>
+							<div class="queue-element albumTableElement">Album1</div>
+						</li>
+					</ul>
 					</div>
 				</div>
 			</div>
