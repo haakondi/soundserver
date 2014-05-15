@@ -15,8 +15,7 @@ public class Receiver implements HttpHandler{
 
 	@Override
 	public void handle(HttpExchange exchange) {
-		System.out.println();
-		System.out.println(exchange.getRequestMethod());
+		
 		incoming.offer(exchange);
 		
 	}
