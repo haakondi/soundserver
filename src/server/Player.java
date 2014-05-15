@@ -84,10 +84,14 @@ public class Player {
 	}
 
 	public void resume() {
-		if (active == null)
+		if (active == null){
+			playNextSong();
 			return;
-		active.play();
-		playing = true;
+			
+		}else{
+			active.play();			
+			playing = true;
+		}
 	}
 
 	public void pause() {
