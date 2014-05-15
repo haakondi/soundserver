@@ -20,3 +20,30 @@
 	font-family: "Georgia";
 	text-align: center;
 }
+.clickableHeader:hover {
+	text-decoration: underline;
+}
+
+.progress-label {
+    font-size: 10px;
+    vertical-align: top;
+}
+
+.progressbar-container {
+	margin: 0 auto;
+    width: 86%;
+    display: inline-block !important;
+}
+
+#progressbar-slider {
+	width: 100%;
+}
+th {
+	position: relative;
+	width:33% !important;
+}
+
+td {
+	position: relative;
+	width:33% !important;
+}
