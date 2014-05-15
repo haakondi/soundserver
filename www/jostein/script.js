@@ -17,6 +17,7 @@ var listSongs = function( data ) {
       playing = true;
   });
 }
+
 Object.toArray = function(obj, sortOn) {
     var array = [], key;
     for (key in obj) {
@@ -58,8 +59,9 @@ function sortSongs(sortOn) {
 }
 
 function updateProgress(status , currentSong) {
-    $( "#progressbar-slider" ).slider( "option", "max", currentSong.length );
-  $('#progressbar-slider').val(status.time);
+  console.log(status.time);
+  console.log(currentSong.length);
+  $('#progressbar-slider').val(status.time/currentSong.length);
 
   $('#progress-made-container span').remove('#progress-made');
   $('#progress-made-container').append('<span class="progress-label" id="progress-made"> ' + status.time + '</span>');
@@ -80,7 +82,6 @@ function fixer( data ) {
 
   updateProgress(status,currentSong);
 
-  //$('#volume-slider').slider('refresh');
   if(status.is_playing) {
       $('#pause_button').show();
       $('#play_button').hide();
@@ -98,6 +99,7 @@ $(document).ready(function() {
     
     $.post( "/",'{command_container : {command : "list_songs"}}', listSongs);
     $.post( "/",'{command_container : {command : "status"}}', fixer);
+
 
     $('#pause_button').hide();
 
