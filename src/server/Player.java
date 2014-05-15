@@ -40,13 +40,13 @@ public class Player {
 		@Override
 		public void run() {
 			synchronized (queue) {
+				playing = false;
 				if(songPlaying != -1){
 					history.addFirst(songPlaying);					
 				}
 				if(queue.size() > 0){
 					playNextSong();
 				}
-				playing = false;
 			}
 			
 		}
