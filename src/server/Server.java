@@ -120,7 +120,7 @@ public class Server implements Runnable {
 			player.stop();
 		}
 		if (command.equalsIgnoreCase("seek")) {
-			player.seek(jsonCommand.getInt(Constants.time));
+			player.seek((float) jsonCommand.getDouble(Constants.time_float));
 		}
 		if (command.equalsIgnoreCase("next")) {
 			player.playNextSong();
