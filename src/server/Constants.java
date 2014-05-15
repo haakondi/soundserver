@@ -9,6 +9,7 @@ public class Constants {
 	public static final String volume = "volume";
 	public static final String artist = "artist";
 	public static final String trackName = "track_name";
+	public static final String trackLength = "length";
 	public static final String album = "album";
 	public static final String status = "status";
 	public static final String queue = "queue";

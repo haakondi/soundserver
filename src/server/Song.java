@@ -13,6 +13,7 @@ public class Song {
 	private Tag tag;
 	public final String uri;
 	private AudioHeader audioHeader;
+	private AudioFile f;
 	
 	
 	
@@ -20,7 +21,7 @@ public class Song {
 		super();
 		this.uri = uri;
 		try {
-			AudioFile f = AudioFileIO.read(new File(uri));
+			f = AudioFileIO.read(new File(uri));
 			this.tag = f.getTag();
 			this.audioHeader = f.getAudioHeader();
 		} catch (Exception e) {
@@ -30,7 +31,7 @@ public class Song {
 		}
 	}
 	
-	private String readTag(FieldKey key){
+	public String readTag(FieldKey key){
 		if(tag == null)
 			return "";
 		return tag.getFirst(key);
@@ -54,12 +55,20 @@ public class Song {
 		return name;
 	}
 	
+	public int getTrackLength(){
+		return audioHeader.getTrackLength();
+	}
+	
+	
 	public JSONObject toJSON(){
 		JSONObject result = new JSONObject();
 		result.put(Constants.album, getAlbum());
 		result.put(Constants.artist, getArtist());
 		result.put(Constants.trackName, getTrackName());
+		result.put(Constants.trackLength, getTrackLength());
 		return result;
 	}
+	
+
 
 }
