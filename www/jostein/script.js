@@ -1,7 +1,7 @@
 var dataStatus = {};
+var queueStatus = [];
 var invertedSort = -1;
 var currentSortOn = 'track_name';
-var playing = false;
 
 
 var listSongs = function( data ) {
@@ -9,12 +9,11 @@ var listSongs = function( data ) {
 	for (var i = 0; i < songs.length; i++) {
 		var song = songs[i];
     dataStatus[i] = song;
-		$('#songTable').append('<tr class="songElement tableElement" id="'+i+'"><td>'+song.track_name+'</td><td>'+song.artist+'</td><td>'+song.album+'</td></tr>');
+		$('#songTable').append('<tr class="songElement tableElement" id="'+i+'"><td class="songTableElement">'+song.track_name+'</td><td class="artistTableElement">'+song.artist+'</td><td class="albumTableElement">'+song.album+'</td></tr>');
 	};
   $('.songElement').click(function() {
       var songID = $(this).attr('id');
       playSong(songID);
-      playing = true;
   });
 }
 function update(){
@@ -57,13 +56,12 @@ function sortSongs(sortOn) {
   for (var i = 0; i < array.length; i++) {
     var key = array[i][0];
     var song = dataStatus[key];
-    $('#songTable').append('<tr class="songElement tableElement" id="'+key+'"><td>'+song.track_name+'</td><td>'+song.artist+'</td><td>'+song.album+'</td></tr>');
+    $('#songTable').append('<tr class="songElement tableElement" id="'+key+'"><td class="songTableElement">'+song.track_name+'</td><td class="artistTableElement">'+song.artist+'</td><td class="albumTableElement">'+song.album+'</td></tr>');
 
   };
   $('.songElement').click(function() {
       var songID = $(this).attr('id');
       playSong(songID);
-      playing = true;
   });
 }
 function computeTime(seconds) {
@@ -96,10 +94,11 @@ function fixer( data ) {
   if(status.song_id_playing !== -1) {
     var currentSong = dataStatus[status.song_id_playing];
     $('.current-display').html('<span class="current-displaytext">'+ currentSong.artist + ' - '+ currentSong.track_name +'</span>');
+    updateProgress(status,currentSong);
   }
   $('#volume-slider').val(status.volume);
 
-  updateProgress(status,currentSong);
+  
 
   if(status.is_playing) {
       $('#pause_button').show();
@@ -153,5 +152,22 @@ $(document).ready(function() {
    $('#albumHeader').click(function() {
     sortSongs('album');
    });
+    var panelList = $('#queue-list');
+
+    panelList.sortable({
+            // Only make the .panel-heading child elements support dragging.
+            // Omit this to make the entire <li>...</li> draggable.
+            handle: '.queue-element',
+            update: function() {
+                $('.drag-drop', panelList).each(function(index, elem) {
+                     var listItem = $(elem),
+                         newIndex = listItem.index();
+
+                      queueStatus[newIndex] = parseInt(listItem.attr('songid'));
+                });
+                $.post( "/index.html",'{command_container : {command : "queue", queue_array: '+queueStatus+'}}', fixer);
+            }
+          });
 });
+
 

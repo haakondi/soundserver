@@ -38,12 +38,25 @@
 #progressbar-slider {
 	width: 100%;
 }
-th {
-	position: relative;
-	width:33% !important;
-}
 
-td {
+.songTableElement {
 	position: relative;
-	width:33% !important;
+	width:48% !important;
+}
+.artistTableElement {
+	position: relative;
+	width:24% !important;
+}
+.albumTableElement {
+	position: relative;
+	width:24% !important;
+}
+#queue-list .drag-drop {
+        cursor: move;
+}
+.queue-element {
+	display: inline-block !important;
+}
+.qHeader {
+	font-weight: bold;
 }
