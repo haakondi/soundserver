@@ -40,7 +40,6 @@ function sortSongs(sortOn) {
   checkAscending(sortOn);
   var array = Object.toArray(dataStatus, sortOn);
   array.sort(function(a, b){
-    console.log(a);
     var nameA=a[1].toLowerCase(), nameB=b[1].toLowerCase()
     if (nameA < nameB) //sort string ascending
       return -1 * invertedSort; 
@@ -52,7 +51,6 @@ function sortSongs(sortOn) {
   for (var i = 0; i < array.length; i++) {
     var key = array[i][0];
     var song = dataStatus[key];
-    console.log(song);
     $('#songTable').append('<tr class="songElement tableElement" id="'+key+'"><td>'+song.track_name+'</td><td>'+song.artist+'</td><td>'+song.album+'</td></tr>');
 
   };
@@ -71,13 +69,13 @@ function updateProgress(status , currentSong) {
 }
 
 function fixer( data ) {
-  console.log(dataStatus);
   var status = $.parseJSON(data);
   status = status.status;
-  var currentSong = dataStatus[status.song_id_playing];
   $('.current-display').remove('.current-displaytext');
+  if(status.song_id_playing !== -1) {
+  var currentSong = dataStatus[status.song_id_playing];
   $('.current-display').html('<span class="current-displaytext">'+ currentSong.artist + ' - '+ currentSong.track_name +'</span>');
-
+  }
   $('#volume-slider').val(status.volume);
 
   updateProgress(status,currentSong);
