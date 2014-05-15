@@ -20,4 +20,5 @@ public class Constants {
 	public static final String prev = "prev";
 	public static final String skipAmount = "skip_amount";
 	public static final String isPlaying = "is_playing";
+	public static final String queueArray = "queue_array";
 }

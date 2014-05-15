@@ -61,7 +61,6 @@ public class Server implements Runnable {
 				if (msg.getRequestMethod().equalsIgnoreCase("POST")) {
 					JSONObject requestJSON = new JSONObject(
 							IOUtils.toString(msg.getRequestBody()));
-					System.out.println(requestJSON);
 					response = processMessage(requestJSON
 							.getJSONObject(Constants.commandContainer));
 				} else {
@@ -128,7 +127,9 @@ public class Server implements Runnable {
 		if (command.equalsIgnoreCase("prev")) {
 			player.prev();
 		}
-		
+		if (!command.equalsIgnoreCase("status")) {
+			System.out.println(jsonCommand);
+		}
 		
 
 		outgoing.put(Constants.status, generateStatus());
@@ -142,7 +143,6 @@ public class Server implements Runnable {
 		status.put(Constants.volume, player.getVolume());
 		status.put(Constants.time, player.getTimeInSeconds());
 		status.put(Constants.isPlaying, player.isPlaying());
-		System.out.println(status);
 		return status;
 
 	}

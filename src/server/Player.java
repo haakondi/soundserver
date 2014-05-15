@@ -87,12 +87,14 @@ public class Player {
 		if (active == null)
 			return;
 		active.play();
+		playing = true;
 	}
 
 	public void pause() {
 		if (active == null)
 			return;
 		active.pause();
+		playing = false;
 	}
 
 	public Double getVolume() {
