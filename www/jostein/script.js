@@ -5,9 +5,21 @@ var currentSortOn = 'track_name';
 
 function makeTableItem(songid) {
   var song = dataStatus[songid];
+  var track = song.track_name;
+  var artist = song.artist;
+  var album = song.album;
+  if(track.length > 25) {
+    track = track.substring(0,23) + '..';
+  } 
+  if(artist.length > 10) {
+    artist = track.substring(0,8) + '..';
+  } 
+  if(album.length > 10) {
+    album = track.substring(0,8) + '..';
+  } 
   var result = '<tr class="songElement tableElement" id="'+songid+'">';
-  result += '<td class="songTableElement">'+song.track_name+'</td>';
-  result += '<td class="artistTableElement">'+song.artist+'</td>';
+  result += '<td class="songTableElement">'+track+'</td>';
+  result += '<td class="artistTableElement">'+artist+'</td>';
   result += '<td class="albumTableElement">'+song.album+'</td>';
   result += '<td class="queueButton"><button type="button" class="btn btn-default"><span class="glyphicon glyphicon-plus-sign"></span></button> </td> '
   result += '</tr>';
@@ -231,9 +243,7 @@ $(document).ready(function() {
     var panelList = $('#queue-list');
 
     panelList.sortable({
-            // Only make the .panel-heading child elements support dragging.
-            // Omit this to make the entire <li>...</li> draggable.
-            handle: '.queue-element',
+
             update: function() {
                 $('.drag-drop', panelList).each(function(index, elem) {
                      var listItem = $(elem),
