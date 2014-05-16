@@ -84,3 +84,19 @@
 .qHeader {
 	font-weight: bold;
 }
+.songsPanelHeader {
+	display: inline-block;
+}
+.search {
+	width: 40%;
+	margin-left: 25%;
+	vertical-align: top;
+}
+
+.songsTitle {
+	width: 30%;
+	vertical-align: top;
+}
+.glyphicon:hover {
+	color: #809FFF;
+}
