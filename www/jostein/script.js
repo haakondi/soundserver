@@ -20,7 +20,7 @@ function makeTableItem(songid) {
   var result = '<tr class="songElement tableElement" id="'+songid+'">';
   result += '<td class="songTableElement">'+track+'</td>';
   result += '<td class="artistTableElement">'+artist+'</td>';
-  result += '<td class="albumTableElement">'+song.album+'</td>';
+  result += '<td class="albumTableElement">'+album+'</td>';
   result += '<td class="queueButton"><button type="button" class="btn btn-default"><span class="glyphicon glyphicon-plus-sign"></span></button> </td> '
   result += '</tr>';
   return result;
