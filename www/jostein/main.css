@@ -62,14 +62,17 @@
 .songTableElement {
 	position: relative;
 	width:40% !important;
+	vertical-align: top;
 }
 .artistTableElement {
 	position: relative;
 	width:20% !important;
+	vertical-align: top;
 }
 .albumTableElement {
 	position: relative;
 	width:20% !important;
+	vertical-align: top;
 }
 .queueButton {
 	position: relative;
