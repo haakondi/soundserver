@@ -74,7 +74,7 @@
 	width:20% !important;
 	vertical-align: top;
 }
-.queueButton {
+.queueSpace {
 	position: relative;
 	width:20% !important;
 }
@@ -99,4 +99,10 @@
 .songsTitle {
 	width: 30%;
 	vertical-align: top;
+}
+.queueGlyph :hover {
+	background-color: #809FFF;
+}
+.list-group-item {
+	padding:2px 2px 2px 2px !important;
 }
