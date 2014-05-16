@@ -12,10 +12,10 @@ function makeTableItem(songid) {
     track = track.substring(0,23) + '..';
   } 
   if(artist.length > 10) {
-    artist = track.substring(0,8) + '..';
+    artist = artist.substring(0,8) + '..';
   } 
   if(album.length > 10) {
-    album = track.substring(0,8) + '..';
+    album = album.substring(0,8) + '..';
   } 
   var result = '<tr class="songElement tableElement" id="'+songid+'">';
   result += '<td class="songTableElement">'+track+'</td>';
