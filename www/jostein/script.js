@@ -28,13 +28,31 @@ function addTableListeners() {
   });
 }
 
+function searchForSongs(param){
+  var matching = [];
+  for(key in dataStatus){
+    var song = dataStatus[key];
+    totalString = song.track_name + song.artist + song.album;
+    if(totalString.toLowerCase().indexOf(param) > -1){
+      matching.push(key);
+    }
+  }
+  $('#songTable tr').remove();
+  for(key in matching){
+    $('#songTable').append(makeTableItem(matching[key]));
+  }
+  addTableListeners();
+
+}
+
+
 var listSongs = function( data ) {
 	var songs = ($.parseJSON(data)).song_list;
 	for (var i = 0; i < songs.length; i++) {
-		var song = songs[i];
+    var song = songs[i];
     dataStatus[i] = song;
     $('#songTable').append(makeTableItem(i));
-	};
+  };
   addTableListeners();
 }
 function update(){
@@ -200,6 +218,9 @@ $(document).ready(function() {
    });
    $('#songHeader').click(function() {
     sortSongs('track_name');
+   });
+   $('#searchBox').on( "keyup change", function(){
+    searchForSongs($(this).val());
    });
    $('#artistHeader').click(function() {
     sortSongs('artist');
