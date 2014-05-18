@@ -62,28 +62,29 @@
 .songTableElement {
 	position: relative;
 	width:40% !important;
-	vertical-align: top;
 }
 .artistTableElement {
 	position: relative;
-	width:20% !important;
-	vertical-align: top;
+	width:25% !important;
 }
 .albumTableElement {
 	position: relative;
-	width:20% !important;
-	vertical-align: top;
+	width:25% !important;
 }
 .queueSpace {
 	position: relative;
-	width:20% !important;
+	width:10% !important;
 }
 #queue-list .drag-drop {
         cursor: move;
 }
 .queue-element {
 	display: inline-block !important;
+	text-overflow: ellipsis;
+	white-space:nowrap;  
+	overflow:hidden;
 }
+
 .qHeader {
 	font-weight: bold;
 }
@@ -102,6 +103,9 @@
 }
 .queueGlyph :hover {
 	background-color: #809FFF;
+}
+.queueGlyph {
+	text-align: center;
 }
 .list-group-item {
 	padding:2px 2px 2px 2px !important;

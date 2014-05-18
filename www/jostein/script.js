@@ -8,15 +8,7 @@ function makeTableItem(songid) {
   var track = song.track_name;
   var artist = song.artist;
   var album = song.album;
-  if(track.length > 25) {
-    track = track.substring(0,23) + '..';
-  } 
-  if(artist.length > 10) {
-    artist = artist.substring(0,8) + '..';
-  } 
-  if(album.length > 10) {
-    album = album.substring(0,8) + '..';
-  } 
+
   var result = '<tr class="songElement tableElement" id="'+songid+'">';
   result += '<td class="songTableElement">'+track+'</td>';
   result += '<td class="artistTableElement">'+artist+'</td>';
@@ -152,9 +144,9 @@ function makeListItem(songid){
   result += '<div class="queue-element songTableElement">'+track+'</div>';
   result += '<div class="queue-element artistTableElement">'+artist+'</div>';
   result += '<div class="queue-element albumTableElement">'+album+'</div>';
+  result += '<div class="queue-element"><span class="glyphicon glyphicon-minus-sign queueGlyph"></span></div>' ;
   result += '</li>';
   return result;
-
 }
 
 function redrawQueue(){
