@@ -1,0 +1,22 @@
+
+.songElement:hover {
+	background-color: #809FFF;
+}
+
+.tableContainer {
+	height:	700px;
+	overflow: auto;
+	overflow-y: auto;
+}
+
+.options-element {
+    margin: 0 auto;
+    width: auto;
+    display: inline-block !important;
+}
+
+.current-display {
+	font-size: 24px;
+	font-family: "Georgia";
+	text-align: center;
+}
