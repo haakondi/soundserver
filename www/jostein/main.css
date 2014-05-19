@@ -48,14 +48,7 @@
 
 .progress-label {
     font-size: 10px;
-    vertical-align: top;
     color: gray;
-}
-
-.progressbar-container {
-	margin: 0 auto;
-    width: 82%;
-    display: inline-block !important;
 }
 
 #progressbar-slider {
@@ -124,4 +117,7 @@ li div {
 	line-height: 1.42857143;
 	width: 30%;
 	vertical-align: top;
+}
+.panel-heading {
+	height: 10%;
 }

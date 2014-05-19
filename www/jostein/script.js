@@ -139,11 +139,9 @@ function computeTime(seconds) {
 function updateProgress(status , currentSong) {
   $('#progressbar-slider').val(status.time/currentSong.length);
 
-  $('#progress-made-container span').remove('#progress-made');
-  $('#progress-made-container').append('<span class="progress-label" id="progress-made"> ' + computeTime(status.time) + '</span>');
+  $('#progress-made').text('' + computeTime(status.time));
 
-  $('#progress-left-container span').remove('#progress-left');
-  $('#progress-left-container').append('<span class="progress-label" id="progress-left"> -' + computeTime(currentSong.length - status.time) + '</span>');
+  $('#progress-left').text('-' + computeTime(currentSong.length - status.time));
 }
 
 function makeListItem(songid){
@@ -208,6 +206,7 @@ $(document).ready(function() {
 
 
     $('#pause_button').hide();
+    $('#progressbar-slider').val(0);
 
     window.setInterval(update, 1000);
 
