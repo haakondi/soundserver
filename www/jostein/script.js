@@ -36,7 +36,7 @@ function addQueueListeners(e) {
   $('.dequeueButton').click(function(e) {
     e.stopPropagation();
     var songID = $(this).parent('.drag-drop').attr('songid');
-    delete queueStatus[songID];    
+    queueStatus.splice($(this).parent('.drag-drop').index(),1);
     $.post( "/index.html",'{command_container : {command : "queue", queue_array: ['+queueStatus+']}}', fixer);
     redrawQueue();
   });
