@@ -31,6 +31,16 @@ function addTableListeners() {
     redrawQueue();
   });
 }
+function addQueueListeners(e) {
+
+  $('.dequeueButton').click(function(e) {
+    e.stopPropagation();
+    var songID = $(this).parent('.drag-drop').attr('songid');
+    delete queueStatus[songID];    
+    $.post( "/index.html",'{command_container : {command : "queue", queue_array: ['+queueStatus+']}}', fixer);
+    redrawQueue();
+  });
+}
 
 function searchForSongs(param){
   var matching = [];
@@ -144,7 +154,7 @@ function makeListItem(songid){
   result += '<div class="queue-element songTableElement">'+track+'</div>';
   result += '<div class="queue-element artistTableElement">'+artist+'</div>';
   result += '<div class="queue-element albumTableElement">'+album+'</div>';
-  result += '<div class="queue-element"><span class="glyphicon glyphicon-minus-sign queueGlyph"></span></div>' ;
+  result += '<div class="queue-element dequeueButton"><span class="glyphicon glyphicon-minus-sign dequeueGlyph"></span></div>' ;
   result += '</li>';
   return result;
 }
@@ -154,6 +164,7 @@ function redrawQueue(){
   for(i in queueStatus){
     $('#queue-list').append(makeListItem(queueStatus[i]));
   }
+  addQueueListeners();
 }
 
 function maintainQueue(queue_array) {

@@ -76,7 +76,7 @@
 	width:10% !important;
 }
 #queue-list .drag-drop {
-        cursor: move;
+    cursor: move;
 }
 .queue-element {
 	display: inline-block !important;
