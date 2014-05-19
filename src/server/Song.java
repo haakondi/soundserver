@@ -69,6 +69,10 @@ public class Song {
 		return result;
 	}
 	
+	public String toString(){
+		return getArtist() + " - " + getTrackName();
+	}
+	
 
 
 }
