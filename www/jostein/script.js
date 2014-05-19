@@ -51,7 +51,7 @@ function searchForSongs(param){
       matching.push(key);
     }
   }
-  $('#songTable tr').remove();
+  $('#songTable li').remove();
   for(key in matching){
     $('#songTable').append(makeTableItem(matching[key]));
   }
@@ -116,7 +116,7 @@ function sortSongs(sortOn) {
       return 1 * invertedSort;
     return 0 ;//default return value (no sorting)
   });
-  $('#songTable tr').remove('.songElement');
+  $('#songTable li').remove();
   for (var i = 0; i < array.length; i++) {
     var key = array[i][0];
     var song = dataStatus[key];
