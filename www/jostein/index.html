@@ -35,32 +35,30 @@
 						</div>
 					</div>
 
-					<table class="table" >
-						<thead>
-							<tr>
-								<th id="songHeader" class="clickableHeader songTableElement">Song</th>
-								<th id="artistHeader" class="clickableHeader artistTableElement">Artist</th>
-								<th id="albumHeader" class="clickableHeader albumTableElement">Album</th>
-								<th class="clickableHeader queueSpace"></th>
-							</tr>
-						</thead>
-					</table>
+					<ul class="list-group" >
+							<li class="list-group-item">
+								<div id="songHeader" class="clickableHeader songTableElement">Song</div>
+								<div id="artistHeader" class="clickableHeader artistTableElement">Artist</div>
+								<div id="albumHeader" class="clickableHeader albumTableElement">Album</div>
+								<div class="clickableHeader queueSpace"></div>
+							</li>
+					</ul>
 					<div class="tableContainer">
-						<table class="table" id="songTable">
+						<ul class="list-group" id="songTable">
 
-						</table>
+						</ul>
 					</div>
 				</div>
 			</div>
 			<div class="col-md-6">
 				<div class="panel panel-default">
-					<div class="panel-heading">Queue</div>
+					<div class="panel-heading"><div class="queueString">Queue</div></div>
 					<ul class="list-group" >
 						<li class="list-group-item">
 							<div class="queue-element songTableElement qHeader">Song</div>
 							<div class="queue-element artistTableElement qHeader">Artist</div>
 							<div class="queue-element albumTableElement qHeader">Album</div>
-							<div class="queue-element"></div>
+							<div class="queue-element queueSpace"></div>
 						</li>
 					</ul>
 					<div class="tableContainer">

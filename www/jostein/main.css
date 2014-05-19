@@ -42,6 +42,9 @@
 .clickableHeader:hover {
 	text-decoration: underline;
 }
+.clickableHeader {
+	font-weight: bold;
+}
 
 .progress-label {
     font-size: 10px;
@@ -73,12 +76,12 @@
 }
 .queueSpace {
 	position: relative;
-	width:10% !important;
+	width:5% !important;
 }
 #queue-list .drag-drop {
     cursor: move;
 }
-.queue-element {
+li div {
 	display: inline-block !important;
 	text-overflow: ellipsis;
 	white-space:nowrap;  
@@ -109,4 +112,14 @@
 }
 .list-group-item {
 	padding:2px 2px 2px 2px !important;
+}
+.queueString {
+	height: 30px;
+	padding: 5px 10px;
+	font-size: 12px;
+	line-height: 1.5;
+	border-radius: 3px;
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font-size: 14px;
+	line-height: 1.42857143;
 }

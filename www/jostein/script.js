@@ -9,12 +9,12 @@ function makeTableItem(songid) {
   var artist = song.artist;
   var album = song.album;
 
-  var result = '<tr class="songElement tableElement" id="'+songid+'">';
-  result += '<td class="songTableElement">'+track+'</td>';
-  result += '<td class="artistTableElement">'+artist+'</td>';
-  result += '<td class="albumTableElement">'+album+'</td>';
-  result += '<td class="queueButton queueSpace"><span class="glyphicon glyphicon-plus-sign queueGlyph"></span> </td> '
-  result += '</tr>';
+  var result = '<li class="songElement list-group-item tableElement" id="'+songid+'">';
+  result += '<div class="songTableElement">'+track+'</div>';
+  result += '<div class="artistTableElement">'+artist+'</div>';
+  result += '<div class="albumTableElement">'+album+'</div>';
+  result += '<div class="queueButton queueSpace"><span class="glyphicon glyphicon-plus-sign queueGlyph"></span> </div> '
+  result += '</li>';
   return result;
   
 }
