@@ -242,6 +242,7 @@ $(document).ready(function() {
    $('#albumHeader').click(function() {
     sortSongs('album');
    });
+   $('')
     var panelList = $('#queue-list');
 
     panelList.sortable({
