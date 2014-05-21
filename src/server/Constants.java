@@ -21,4 +21,9 @@ public class Constants {
 	public static final String skipAmount = "skip_amount";
 	public static final String isPlaying = "is_playing";
 	public static final String queueArray = "queue_array";
+	public static final String getArtwork = "get_artwork";
+	public static final String artwork = "artwork";
+	public static final String mime = "mime_type";
+	public static final String imageData = "image_data";
+	public static final String imageEcnoding = "image_encoding";
 }

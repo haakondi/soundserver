@@ -7,6 +7,7 @@ import org.jaudiotagger.audio.AudioFileIO;
 import org.jaudiotagger.audio.AudioHeader;
 import org.jaudiotagger.tag.FieldKey;
 import org.jaudiotagger.tag.Tag;
+import org.jaudiotagger.tag.datatype.Artwork;
 import org.json.JSONObject;
 
 public class Song {
@@ -57,6 +58,10 @@ public class Song {
 	
 	public int getTrackLength(){
 		return audioHeader.getTrackLength();
+	}
+	
+	public Artwork getArtwork(){
+		return tag.getFirstArtwork();
 	}
 	
 	
