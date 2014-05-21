@@ -11,6 +11,8 @@ import org.apache.commons.io.IOUtils;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import sun.misc.BASE64Encoder;
+
 import com.sun.net.httpserver.HttpExchange;
 
 public class Server implements Runnable {
@@ -82,6 +84,7 @@ public class Server implements Runnable {
 			}
 		}
 	}
+	
 
 	public Response processMessage(JSONObject jsonCommand) {
 		String command = jsonCommand.getString("command");
@@ -132,6 +135,20 @@ public class Server implements Runnable {
 		if (command.equalsIgnoreCase("prev")) {
 			player.prev();
 		}
+		if (command.equalsIgnoreCase(Constants.getArtwork)) {
+			if(player.isPlaying()){
+				JSONObject artwork = new JSONObject();
+				Song currentSong = player.getSong(player.getSongIDPlaying());
+				BASE64Encoder encoder = new BASE64Encoder();
+				String base64 = encoder.encode(currentSong.getArtwork().getBinaryData());
+				artwork.put(Constants.imageData, base64);
+				artwork.put(Constants.imageEcnoding, "base64");
+				artwork.put(Constants.mime, currentSong.getArtwork().getMimeType());
+				outgoing.put(Constants.artwork, artwork);
+			}
+				
+		}
+		
 		if (!command.equalsIgnoreCase("status")) {
 			System.out.println(jsonCommand);
 		}
@@ -144,7 +161,7 @@ public class Server implements Runnable {
 
 	public JSONObject generateStatus() {
 		JSONObject status = new JSONObject();
-		status.put(Constants.songIDPlaying, player.getSongPlaying());
+		status.put(Constants.songIDPlaying, player.getSongIDPlaying());
 		status.put(Constants.volume, player.getVolume());
 		status.put(Constants.time, player.getTimeInSeconds());
 		status.put(Constants.isPlaying, player.isPlaying());

@@ -53,8 +53,12 @@ public class Player {
 		
 	}
 
-	public int getSongPlaying() {
+	public int getSongIDPlaying() {
 		return songPlaying;
+	}
+	
+	public Song getSong(int id){
+		return songs.get(id);
 	}
 
 	private void listSongs(File dir) {
