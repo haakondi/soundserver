@@ -1,4 +1,9 @@
 
+html,body
+{
+  height: 100%;
+}
+
 .start h1 {
 	text-align: center;
 	vertical-align: top;
@@ -22,7 +27,7 @@
 }
 
 .tableContainer {
-	height:400px;
+	height: 300px;
 	overflow: auto;
 	overflow-y: auto;
 }

@@ -2,6 +2,7 @@ var dataStatus = {};
 var queueStatus = [];
 var invertedSort = -1;
 var currentSortOn = 'track_name';
+var currentSongID = -1;
 
 function makeTableItem(songid) {
   var song = dataStatus[songid];
@@ -19,7 +20,7 @@ function makeTableItem(songid) {
   
 }
 function addTableListeners() {
-  $('.songElement').click(function() {
+  $('.songElement').dblclick(function() {
       var songID = $(this).attr('id');
       playSong(songID);
   });
@@ -29,6 +30,7 @@ function addTableListeners() {
     queueStatus[queueStatus.length] = songID;
     $.post( "/index.html",'{command_container : {command : "queue", queue_array: ['+queueStatus+']}}', fixer);
     redrawQueue();
+    $(this).parent().fadeIn(100).fadeOut(100).fadeIn(100).fadeOut(100).fadeIn(100);
   });
 }
 function addQueueListeners(e) {
@@ -39,6 +41,7 @@ function addQueueListeners(e) {
     queueStatus.splice($(this).parent('.drag-drop').index(),1);
     $.post( "/index.html",'{command_container : {command : "queue", queue_array: ['+queueStatus+']}}', fixer);
     redrawQueue();
+
   });
 }
 
@@ -172,12 +175,20 @@ function maintainQueue(queue_array) {
     redrawQueue();
   }
 }
-
+function addAlbumCover(data) {
+  var img = $.parseJSON(data);
+  var artwork = img.artwork;
+  $('#albumCover').attr('src', 'data:' + artwork.mime_type + ';'+artwork.image_encoding+',' + artwork.image_data);
+}
 function fixer( data ) {
   var status = $.parseJSON(data);
   status = status.status;
   $('.current-display').remove('.current-displaytext');
   if(status.song_id_playing !== -1) {
+    if(currentSongID !== status.song_id_playing) {
+      currentSongID = status.song_id_playing;
+      $.post( "/",'{command_container : {command : "get_artwork" , song_id : '+ currentSongID +'}}', addAlbumCover);
+    }
     var currentSong = dataStatus[status.song_id_playing];
     $('.current-display').html('<span class="current-displaytext">'+ currentSong.artist + ' - '+ currentSong.track_name +'</span>');
     updateProgress(status,currentSong);
@@ -242,6 +253,7 @@ $(document).ready(function() {
    $('#albumHeader').click(function() {
     sortSongs('album');
    });
+   $('')
     var panelList = $('#queue-list');
 
     panelList.sortable({
