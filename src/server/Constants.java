@@ -26,4 +26,5 @@ public class Constants {
 	public static final String mime = "mime_type";
 	public static final String imageData = "image_data";
 	public static final String imageEcnoding = "image_encoding";
+	public static final String success = "success";
 }

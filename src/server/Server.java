@@ -140,10 +140,16 @@ public class Server implements Runnable {
 				JSONObject artwork = new JSONObject();
 				Song currentSong = player.getSong(player.getSongIDPlaying());
 				BASE64Encoder encoder = new BASE64Encoder();
-				String base64 = encoder.encode(currentSong.getArtwork().getBinaryData());
-				artwork.put(Constants.imageData, base64);
-				artwork.put(Constants.imageEcnoding, "base64");
-				artwork.put(Constants.mime, currentSong.getArtwork().getMimeType());
+				if(currentSong.getArtwork() != null){
+					String base64 = encoder.encode(currentSong.getArtwork().getBinaryData());
+					artwork.put(Constants.imageData, base64);
+					artwork.put(Constants.imageEcnoding, "base64");
+					artwork.put(Constants.mime, currentSong.getArtwork().getMimeType());
+					artwork.put(Constants.success, true);
+				}
+				else{
+					artwork.put(Constants.success, false);
+				}
 				outgoing.put(Constants.artwork, artwork);
 			}
 				
