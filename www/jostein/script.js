@@ -177,9 +177,9 @@ function maintainQueue(queue_array) {
 }
 function addAlbumCover(data) {
   var img = $.parseJSON(data);
+  var artwork = img.artwork;
   if(artwork.success){
     $('#albumCover').show();
-    var artwork = img.artwork;
     var imgString = 'data:' + artwork.mime_type + ';'+artwork.image_encoding+',' + artwork.image_data;
     $('#albumCover').attr('src', imgString);
     $('body').css('background-image', 'url(' + imgString + ')');
