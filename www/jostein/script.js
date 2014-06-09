@@ -47,10 +47,18 @@ function addQueueListeners(e) {
 
 function searchForSongs(param){
   var matching = [];
+  var paramList = param.split(" ");
   for(key in dataStatus){
     var song = dataStatus[key];
     totalString = song.track_name + song.artist + song.album;
-    if(totalString.toLowerCase().indexOf(param) > -1){
+    var match = true;
+    for(index in paramList){
+      if(totalString.toLowerCase().indexOf(paramList[index]) <= -1){
+        match = false;
+        break;
+      }
+    }
+    if(match){
       matching.push(key);
     }
   }
